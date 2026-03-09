@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0f0f10" />
+    <title>Manu Burguer | Cardápio</title>
+    <meta
+      name="description"
+      content="Cardápio digital da Manu Burguer com carrinho, checkout rápido e envio do pedido para o WhatsApp."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./public/assets/css/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell"></div>
+
+    <header class="topbar glass">
+      <div>
+        <span class="brand-kicker">MANU BURGUER</span>
+        <h1>Cardápio digital</h1>
+        <p>Escolha seus lanches, monte o pedido e finalize no WhatsApp.</p>
+      </div>
+      <button class="cart-floating-btn" id="open-cart-top" type="button" aria-label="Abrir carrinho">
+        <span class="cart-floating-icon">🛒</span>
+        <span>
+          <strong id="top-cart-count">0 itens</strong>
+          <small id="top-cart-total">R$ 0,00</small>
+        </span>
+      </button>
+    </header>
+
+    <main class="page-content">
+      <section class="hero-section">
+        <div class="hero-card glass reveal">
+          <div class="hero-copy">
+            <span class="hero-pill">Hambúrgueria premium</span>
+            <h2>Lanches artesanais de qualidade.</h2>
+            
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#categorias">Ver cardápio</a>
+              <button class="btn btn-secondary" id="open-cart-hero" type="button">Abrir carrinho</button>
+            </div>
+          </div>
+          <div class="hero-badge-list">
+            <article class="hero-mini glass-soft">
+              <strong>Pedido rápido</strong>
+              <span>Sem login, sem complicação.</span>
+            </article>
+            <article class="hero-mini glass-soft">
+              <strong>WhatsApp direto</strong>
+              <span>Mensagem pronta com tudo organizado.</span>
+            </article>
+            <article class="hero-mini glass-soft">
+              <strong>Fácil de editar</strong>
+              <span>Imagens, preços e textos separados em pastas.</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="category-nav" id="categorias">
+        <button class="category-chip is-active" data-filter="all" type="button">Todos</button>
+        <button class="category-chip" data-filter="lanches" type="button">Lanches</button>
+        <button class="category-chip" data-filter="combos" type="button">Combos</button>
+        <button class="category-chip" data-filter="porcoes" type="button">Porções</button>
+        <button class="category-chip" data-filter="bebidas" type="button">Bebidas</button>
+      </section>
+
+      <section class="products-wrapper">
+        <div class="section-heading reveal">
+          <span class="section-kicker">Cardápio Manu Burguer</span>
+          <h3>Escolha por etapa</h3>
+          <p>Clique em adicionar para enviar tudo certinho depois para o WhatsApp.</p>
+        </div>
+        <div class="products-grid" id="products-grid"></div>
+      </section>
+    </main>
+
+    <button class="mobile-cart-bar" id="open-cart-bottom" type="button">
+      <span>
+        <strong id="bottom-cart-count">0 itens no carrinho</strong>
+        <small id="bottom-cart-total">Toque para revisar o pedido</small>
+      </span>
+      <span class="mobile-cart-price" id="bottom-cart-price">R$ 0,00</span>
+    </button>
+
+    <aside class="cart-drawer" id="cart-drawer" aria-hidden="true">
+      <div class="cart-drawer__overlay" id="cart-overlay"></div>
+      <div class="cart-drawer__panel glass">
+        <div class="cart-header">
+          <div>
+            <span class="section-kicker">Seu pedido</span>
+            <h3>Carrinho</h3>
+          </div>
+          <button class="icon-btn" id="close-cart" type="button" aria-label="Fechar carrinho">✕</button>
+        </div>
+
+        <div class="cart-list" id="cart-list"></div>
+
+        <div class="cart-summary glass-soft">
+          <div class="summary-line">
+            <span>Subtotal</span>
+            <strong id="cart-subtotal">R$ 0,00</strong>
+          </div>
+          <div class="summary-line muted">
+            <span>Entrega</span>
+            <strong>Combinar no WhatsApp</strong>
+          </div>
+        </div>
+
+        <div class="cart-footer">
+          <button class="btn btn-secondary" id="clear-cart" type="button">Limpar carrinho</button>
+          <button class="btn btn-primary" id="open-checkout" type="button">Realizar pedido</button>
+        </div>
+      </div>
+    </aside>
+
+    <div class="modal" id="checkout-modal" aria-hidden="true">
+      <div class="modal__overlay" id="checkout-overlay"></div>
+      <div class="modal__panel glass">
+        <div class="modal__header">
+          <div>
+            <span class="section-kicker">Finalização</span>
+            <h3>Dados do pedido</h3>
+          </div>
+          <button class="icon-btn" id="close-checkout" type="button" aria-label="Fechar">✕</button>
+        </div>
+
+        <form class="checkout-form" id="checkout-form">
+          <label>
+            <span>Nome do cliente</span>
+            <input type="text" name="customerName" placeholder="Digite seu nome" required />
+          </label>
+
+          <label>
+            <span>Endereço completo</span>
+            <textarea
+              name="address"
+              rows="3"
+              placeholder="Rua, número, bairro, complemento"
+              required
+            ></textarea>
+          </label>
+
+          <label>
+            <span>Forma de pagamento</span>
+            <select name="paymentMethod" required>
+              <option value="">Selecione</option>
+              <option value="Dinheiro">Dinheiro</option>
+              <option value="Pix">Pix</option>
+              <option value="Cartão na entrega">Cartão na entrega</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Troco para quanto? (opcional)</span>
+            <input type="text" name="changeFor" placeholder="Ex: 100,00" />
+          </label>
+
+          <label>
+            <span>Observações (opcional)</span>
+            <textarea
+              name="notes"
+              rows="3"
+              placeholder="Ex: sem cebola, ponto da carne, retirar no local..."
+            ></textarea>
+          </label>
+
+          <div class="checkout-total glass-soft">
+            <span>Total do pedido</span>
+            <strong id="checkout-total">R$ 0,00</strong>
+          </div>
+
+          <button class="btn btn-primary btn-full" type="submit">Enviar pedido no WhatsApp</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script type="module" src="./public/assets/js/main.js"></script>
+  </body>
+</html>
