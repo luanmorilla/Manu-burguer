@@ -1025,4 +1025,13 @@ RESPONSIVO
       transform: translateX(-50%) translateY(0);
     }
   }
-}
+}.brand-block{
+  display:flex;
+  align-items:center;
+  }
+  
+  .brand-logo-main{
+    height:80px;
+    width:auto;
+    filter: drop-shadow(0 0 10px rgba(255,180,50,0.35));
+    }
