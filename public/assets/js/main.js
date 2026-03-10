@@ -598,30 +598,29 @@ function buildWhatsAppMessage(validated) {
     (item) => `• ${item.quantity}x ${item.name} — ${formatCurrency(item.total)}`,
   );
 
-  return 
-    [
-      "🍔 *NOVO PEDIDO - MANU BURGUER*",
-      "",
-      `*Data/Hora:* ${dateTime}`,
-      `*Cliente:* ${validated.customerName}`,
-      `*Telefone:* ${validated.phone}`,
-      `*Tipo do pedido:* ${validated.orderType}`,
-      validated.orderType === "Entrega"
-        ? `*Endereço:* ${validated.address}`
-        : null,
-      `*Pagamento:* ${validated.paymentMethod}`,
-      validated.changeFor ? `*Troco para:* ${validated.changeFor}` : null,
-      `*Preparo médio:* ${prepTime}`,
-      "",
-      "*Itens do pedido:*",
-      ...itemLines,
-      "",
-      `*Total:* ${formatCurrency(totals.total)}`,
-      validated.notes ? `*Observações:* ${validated.notes}` : null,
-    ]
-      .filter(Boolean)
-      .join("\n");
-    }
+  return [
+    "🍔 *NOVO PEDIDO - MANU BURGUER*",
+    "",
+    `*Data/Hora:* ${dateTime}`,
+    `*Cliente:* ${validated.customerName}`,
+    `*Telefone:* ${validated.phone}`,
+    `*Tipo do pedido:* ${validated.orderType}`,
+    validated.orderType === "Entrega"
+      ? `*Endereço:* ${validated.address}`
+      : null,
+    `*Pagamento:* ${validated.paymentMethod}`,
+    validated.changeFor ? `*Troco para:* ${validated.changeFor}` : null,
+    `*Preparo médio:* ${prepTime}`,
+    "",
+    "*Itens do pedido:*",
+    ...itemLines,
+    "",
+    `*Total:* ${formatCurrency(totals.total)}`,
+    validated.notes ? `*Observações:* ${validated.notes}` : null,
+  ]
+    .filter(Boolean)
+    .join("\n");
+}
 
 function submitCheckout(event) {
   event.preventDefault();
@@ -642,6 +641,12 @@ function submitCheckout(event) {
   }
 
   const message = buildWhatsAppMessage(validation.values);
+
+  if (!message) {
+    showToast("Não foi possível montar a mensagem do pedido");
+    return;
+  }
+
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
   window.open(url, "_blank", "noopener,noreferrer");
