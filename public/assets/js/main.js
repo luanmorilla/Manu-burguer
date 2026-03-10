@@ -595,19 +595,17 @@ function buildWhatsAppMessage(validated) {
   const dateTime = new Date().toLocaleString("pt-BR");
 
   const itemLines = items.map(
-    (item) => `• ${item.quantity}x ${item.name} — ${formatCurrency(item.total)}`,
+    (item) => `• ${item.quantity}x ${item.name} — ${formatCurrency(item.total)}`
   );
 
-  return [
+  const messageLines = [
     "🍔 *NOVO PEDIDO - MANU BURGUER*",
     "",
     `*Data/Hora:* ${dateTime}`,
     `*Cliente:* ${validated.customerName}`,
     `*Telefone:* ${validated.phone}`,
     `*Tipo do pedido:* ${validated.orderType}`,
-    validated.orderType === "Entrega"
-      ? `*Endereço:* ${validated.address}`
-      : null,
+    validated.orderType === "Entrega" ? `*Endereço:* ${validated.address}` : null,
     `*Pagamento:* ${validated.paymentMethod}`,
     validated.changeFor ? `*Troco para:* ${validated.changeFor}` : null,
     `*Preparo médio:* ${prepTime}`,
@@ -617,9 +615,9 @@ function buildWhatsAppMessage(validated) {
     "",
     `*Total:* ${formatCurrency(totals.total)}`,
     validated.notes ? `*Observações:* ${validated.notes}` : null,
-  ]
-    .filter(Boolean)
-    .join("\n");
+  ];
+
+  return messageLines.filter(Boolean).join("\n");
 }
 
 function submitCheckout(event) {
@@ -642,8 +640,8 @@ function submitCheckout(event) {
 
   const message = buildWhatsAppMessage(validation.values);
 
-  if (!message) {
-    showToast("Não foi possível montar a mensagem do pedido");
+  if (!message || typeof message !== "string") {
+    showToast("Erro ao montar a mensagem do pedido");
     return;
   }
 
