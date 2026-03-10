@@ -1,16 +1,16 @@
 :root {
-  --bg: #0f0f10;
-  --bg-soft: #171719;
-  --card: rgba(255, 255, 255, 0.06);
-  --card-strong: rgba(255, 255, 255, 0.09);
-  --stroke: rgba(255, 255, 255, 0.1);
+  --bg: #050505;
+  --bg-soft: #0d0d0d;
+  --card: rgba(255, 255, 255, 0.03);
+  --card-strong: rgba(255, 255, 255, 0.05);
+  --stroke: rgba(212, 175, 55, 0.14);
   --text: #ffffff;
-  --muted: #b8b8bb;
-  --primary: #ff8c32;
-  --primary-2: #ffbc53;
-  --accent: #ff4d2d;
+  --muted: #b9b9b9;
+  --primary: #d4af37;
+  --primary-2: #f1d27a;
+  --accent: #b8860b;
   --success: #22c55e;
-  --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  --shadow: 0 22px 65px rgba(0, 0, 0, 0.72);
   --radius-xl: 28px;
   --radius-lg: 22px;
   --radius-md: 18px;
@@ -30,9 +30,9 @@ body {
   margin: 0;
   font-family: "Inter", sans-serif;
   background:
-    radial-gradient(circle at top, rgba(255, 140, 50, 0.16), transparent 30%),
-    radial-gradient(circle at bottom right, rgba(255, 77, 45, 0.16), transparent 30%),
-    var(--bg);
+    radial-gradient(circle at top, rgba(212, 175, 55, 0.08), transparent 26%),
+    radial-gradient(circle at bottom right, rgba(212, 175, 55, 0.05), transparent 24%),
+    linear-gradient(180deg, #050505 0%, #080808 45%, #050505 100%);
   color: var(--text);
   min-height: 100vh;
 }
@@ -59,8 +59,8 @@ button {
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.03), transparent 20%),
-    linear-gradient(0deg, rgba(255,255,255,0.02), transparent 22%);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 18%),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.015), transparent 20%);
 }
 
 .topbar,
@@ -98,9 +98,9 @@ button {
   display: inline-flex;
   align-items: center;
   width: fit-content;
-  border: 1px solid rgba(255, 188, 83, 0.25);
-  background: rgba(255, 188, 83, 0.1);
-  color: #ffd596;
+  border: 1px solid rgba(212, 175, 55, 0.24);
+  background: rgba(212, 175, 55, 0.08);
+  color: #f1d27a;
   padding: 7px 12px;
   border-radius: 999px;
   font-size: 11px;
@@ -142,11 +142,11 @@ button {
 }
 
 .glass {
-  background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.04));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.02));
 }
 
 .glass-soft {
-  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015));
 }
 
 .cart-floating-btn,
@@ -178,9 +178,10 @@ button {
   padding: 14px 16px;
   border-radius: 18px;
   background: linear-gradient(135deg, var(--primary), var(--accent));
-  color: #1b1207;
+  color: #120d03;
   font-weight: 800;
   min-width: 130px;
+  box-shadow: 0 16px 40px rgba(212, 175, 55, 0.16);
 }
 
 .cart-floating-btn small,
@@ -210,7 +211,7 @@ button {
   width: 160px;
   height: 160px;
   border-radius: 999px;
-  background: radial-gradient(circle, rgba(255,188,83,0.25), transparent 70%);
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.18), transparent 70%);
 }
 
 .hero-copy h2 {
@@ -255,16 +256,17 @@ button {
   white-space: nowrap;
   border-radius: 999px;
   padding: 12px 14px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.04);
   color: var(--text);
   border: 1px solid rgba(255, 255, 255, 0.08);
   font-weight: 700;
 }
 
 .category-chip.is-active {
-  background: linear-gradient(135deg, rgba(255, 140, 50, 0.18), rgba(255, 77, 45, 0.22));
-  border-color: rgba(255, 188, 83, 0.4);
-  color: #ffd596;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.16), rgba(184, 134, 11, 0.18));
+  border-color: rgba(212, 175, 55, 0.38);
+  color: #f1d27a;
+  box-shadow: 0 10px 28px rgba(212, 175, 55, 0.1);
 }
 
 .section-heading {
@@ -283,8 +285,8 @@ button {
 .product-card {
   border-radius: 24px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+  border: 1px solid rgba(212, 175, 55, 0.12);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.02));
   box-shadow: var(--shadow);
 }
 
@@ -292,7 +294,7 @@ button {
   position: relative;
   aspect-ratio: 16 / 11;
   overflow: hidden;
-  background: linear-gradient(135deg, rgba(255,140,50,0.16), rgba(255,77,45,0.18));
+  background: linear-gradient(135deg, rgba(18, 18, 18, 0.98), rgba(8, 8, 8, 0.95));
 }
 
 .product-thumb img {
@@ -307,12 +309,13 @@ button {
   position: absolute;
   inset: auto 12px 12px 12px;
   border-radius: 999px;
-  background: rgba(15, 15, 16, 0.76);
+  background: rgba(5, 5, 5, 0.82);
   color: #fff;
   font-size: 11px;
   font-weight: 700;
   padding: 8px 10px;
   text-align: center;
+  border: 1px solid rgba(212, 175, 55, 0.16);
 }
 
 .product-content {
@@ -336,9 +339,9 @@ button {
   flex-shrink: 0;
   border-radius: 999px;
   padding: 8px 10px;
-  background: rgba(255, 188, 83, 0.1);
-  border: 1px solid rgba(255, 188, 83, 0.24);
-  color: #ffd596;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  color: #f1d27a;
   font-size: 11px;
   font-weight: 800;
   text-transform: uppercase;
@@ -370,6 +373,7 @@ button {
 .product-price strong {
   font-size: 24px;
   line-height: 1;
+  color: var(--primary-2);
 }
 
 .add-btn,
@@ -381,8 +385,9 @@ button {
 .add-btn {
   padding: 14px 18px;
   background: linear-gradient(135deg, var(--primary), var(--accent));
-  color: #160d03;
+  color: #120d03;
   min-width: 124px;
+  box-shadow: 0 14px 34px rgba(212, 175, 55, 0.16);
 }
 
 .btn {
@@ -391,13 +396,14 @@ button {
 
 .btn-primary {
   background: linear-gradient(135deg, var(--primary), var(--accent));
-  color: #160d03;
+  color: #120d03;
+  box-shadow: 0 14px 34px rgba(212, 175, 55, 0.16);
 }
 
 .btn-secondary {
-  background: rgba(255,255,255,0.06);
+  background: rgba(255, 255, 255, 0.045);
   color: var(--text);
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(212, 175, 55, 0.12);
 }
 
 .btn-full {
@@ -415,9 +421,9 @@ button {
   gap: 12px;
   padding: 15px 16px;
   border-radius: 22px;
-  background: linear-gradient(135deg, rgba(255,140,50,0.98), rgba(255,77,45,0.98));
-  color: #140c04;
-  box-shadow: 0 24px 54px rgba(0, 0, 0, 0.45);
+  background: linear-gradient(135deg, #d4af37, #b8860b);
+  color: #120d03;
+  box-shadow: 0 24px 54px rgba(0, 0, 0, 0.55);
 }
 
 .mobile-cart-bar strong,
@@ -447,7 +453,7 @@ button {
 .modal__overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.62);
+  background: rgba(0, 0, 0, 0.72);
 }
 
 .cart-drawer__panel,
@@ -463,6 +469,9 @@ button {
   overflow: auto;
   bottom: 0;
   animation: slideUp 0.28s ease;
+  background: linear-gradient(180deg, #111111, #080808);
+  border: 1px solid rgba(212, 175, 55, 0.12);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.62);
 }
 
 .modal__panel {
@@ -501,9 +510,9 @@ button {
 
 .cart-item {
   padding: 14px;
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid rgba(212, 175, 55, 0.1);
   border-radius: 20px;
-  background: rgba(255,255,255,0.04);
+  background: rgba(255, 255, 255, 0.03);
   align-items: stretch;
 }
 
@@ -519,7 +528,7 @@ button {
 }
 
 .cart-item__price {
-  color: #ffd596;
+  color: var(--primary-2);
   font-weight: 700;
 }
 
@@ -534,14 +543,14 @@ button {
   width: 38px;
   height: 38px;
   border-radius: 12px;
-  background: rgba(255,255,255,0.08);
+  background: rgba(255, 255, 255, 0.06);
   color: var(--text);
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(212, 175, 55, 0.1);
 }
 
 .remove-link {
   background: none;
-  color: #ff9d8c;
+  color: #f0a98c;
   padding: 0;
   font-weight: 700;
 }
@@ -574,14 +583,14 @@ button {
 .checkout-form span {
   font-size: 13px;
   font-weight: 700;
-  color: #ffd596;
+  color: var(--primary-2);
 }
 
 .checkout-form input,
 .checkout-form textarea,
 .checkout-form select {
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(212, 175, 55, 0.12);
+  background: rgba(255, 255, 255, 0.04);
   color: var(--text);
   border-radius: 16px;
   padding: 14px;
@@ -591,12 +600,12 @@ button {
 .checkout-form input:focus,
 .checkout-form textarea:focus,
 .checkout-form select:focus {
-  border-color: rgba(255,188,83,0.6);
-  box-shadow: 0 0 0 4px rgba(255,188,83,0.1);
+  border-color: rgba(212, 175, 55, 0.55);
+  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.08);
 }
 
 .empty-cart {
-  border: 1px dashed rgba(255,255,255,0.15);
+  border: 1px dashed rgba(212, 175, 55, 0.18);
   border-radius: 20px;
   padding: 20px;
   text-align: center;
@@ -607,11 +616,11 @@ button {
   left: 50%;
   bottom: calc(94px + env(safe-area-inset-bottom));
   transform: translateX(-50%) translateY(16px);
-  background: rgba(22, 22, 24, 0.94);
+  background: rgba(10, 10, 10, 0.96);
   color: #fff;
   padding: 12px 14px;
   border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid rgba(212, 175, 55, 0.12);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease, transform 0.2s ease;
