@@ -135,6 +135,7 @@
       class="mobile-cart-bar is-hidden"
       id="open-cart-bottom"
       type="button"
+      aria-label="Abrir carrinho"
     >
       <span>
         <strong id="bottom-cart-count">0 itens no carrinho</strong>
@@ -146,7 +147,7 @@
     <aside class="cart-drawer" id="cart-drawer" aria-hidden="true">
       <div class="cart-drawer__overlay" id="cart-overlay"></div>
 
-      <div class="cart-drawer__panel glass">
+      <div class="cart-drawer__panel glass" role="dialog" aria-modal="true" aria-label="Carrinho">
         <div class="cart-header">
           <div>
             <span class="section-kicker">Seu pedido</span>
@@ -196,7 +197,12 @@
     <div class="modal" id="product-modal" aria-hidden="true">
       <div class="modal__overlay" id="product-overlay"></div>
 
-      <div class="modal__panel glass modal__panel--product">
+      <div
+        class="modal__panel glass modal__panel--product"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Detalhes do produto"
+      >
         <div class="modal__header">
           <div>
             <span class="section-kicker">Detalhes do produto</span>
@@ -219,9 +225,9 @@
           </div>
 
           <div class="product-modal__info">
-            <span class="product-modal__badge" id="product-modal-tag"
-              >Destaque</span
-            >
+            <span class="product-modal__badge" id="product-modal-tag">
+              Destaque
+            </span>
 
             <p
               class="product-modal__description"
@@ -255,7 +261,12 @@
     <div class="modal" id="checkout-modal" aria-hidden="true">
       <div class="modal__overlay" id="checkout-overlay"></div>
 
-      <div class="modal__panel glass">
+      <div
+        class="modal__panel glass"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Finalização do pedido"
+      >
         <div class="modal__header">
           <div>
             <span class="section-kicker">Finalização</span>
@@ -279,6 +290,7 @@
               type="text"
               name="customerName"
               placeholder="Digite seu nome"
+              autocomplete="name"
               required
             />
           </label>
@@ -289,6 +301,8 @@
               type="tel"
               name="phone"
               placeholder="(11) 99999-9999"
+              autocomplete="tel"
+              inputmode="tel"
               required
             />
           </label>
@@ -308,6 +322,7 @@
               name="address"
               rows="3"
               placeholder="Rua, número, bairro, complemento"
+              autocomplete="street-address"
               required
             ></textarea>
           </label>
@@ -324,7 +339,12 @@
 
           <label>
             <span>Troco para quanto? (opcional)</span>
-            <input type="text" name="changeFor" placeholder="Ex: 100,00" />
+            <input
+              type="text"
+              name="changeFor"
+              inputmode="decimal"
+              placeholder="Ex: 100,00"
+            />
           </label>
 
           <label>
@@ -348,7 +368,7 @@
       </div>
     </div>
 
-    <div class="toast" id="toast"></div>
+    <div class="toast" id="toast" aria-live="polite"></div>
 
     <script type="module" src="./public/assets/js/main.js"></script>
   </body>

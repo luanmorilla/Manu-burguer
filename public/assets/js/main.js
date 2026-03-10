@@ -80,6 +80,10 @@ function formatPhoneForMessage(value) {
   return value;
 }
 
+function getAddressInput() {
+  return elements.checkoutForm?.querySelector('textarea[name="address"]') || null;
+}
+
 function getProductById(productId) {
   return state.products.find((product) => product.id === productId) || null;
 }
@@ -195,7 +199,12 @@ function renderProducts() {
     .map(
       (product) => `
         <article class="product-card reveal ${product.featured ? "product-card--featured" : ""}">
-          <button class="product-thumb product-thumb--button" type="button" data-open-product="${product.id}" aria-label="Ver detalhes de ${escapeHtml(product.name)}">
+          <button
+            class="product-thumb product-thumb--button"
+            type="button"
+            data-open-product="${product.id}"
+            aria-label="Ver detalhes de ${escapeHtml(product.name)}"
+          >
             <img
               src="${escapeHtml(product.image)}"
               alt="${escapeHtml(product.name)}"
@@ -282,22 +291,39 @@ function renderCart() {
     }
   }
 
-  if (elements.cartSubtotal) elements.cartSubtotal.textContent = formatCurrency(totals.total);
-  if (elements.checkoutTotal) elements.checkoutTotal.textContent = formatCurrency(totals.total);
-  if (elements.cartPrepTime) elements.cartPrepTime.textContent = prepTime;
+  if (elements.cartSubtotal) {
+    elements.cartSubtotal.textContent = formatCurrency(totals.total);
+  }
+
+  if (elements.checkoutTotal) {
+    elements.checkoutTotal.textContent = formatCurrency(totals.total);
+  }
+
+  if (elements.cartPrepTime) {
+    elements.cartPrepTime.textContent = prepTime;
+  }
+
   if (elements.topCartCount) {
     elements.topCartCount.textContent = `${totals.quantity} ${totals.quantity === 1 ? "item" : "itens"}`;
   }
-  if (elements.topCartTotal) elements.topCartTotal.textContent = formatCurrency(totals.total);
+
+  if (elements.topCartTotal) {
+    elements.topCartTotal.textContent = formatCurrency(totals.total);
+  }
+
   if (elements.bottomCartCount) {
     elements.bottomCartCount.textContent = `${totals.quantity} ${totals.quantity === 1 ? "item" : "itens"} no carrinho`;
   }
+
   if (elements.bottomCartTotal) {
     elements.bottomCartTotal.textContent = totals.quantity
       ? `Preparo médio: ${prepTime}`
       : "Escolha produtos para começar";
   }
-  if (elements.bottomCartPrice) elements.bottomCartPrice.textContent = formatCurrency(totals.total);
+
+  if (elements.bottomCartPrice) {
+    elements.bottomCartPrice.textContent = formatCurrency(totals.total);
+  }
 
   updateBottomCartVisibility(totals.quantity);
 }
@@ -314,6 +340,7 @@ function setFilter(filter) {
 
 function addToCart(productId) {
   const product = getProductById(productId);
+
   if (!product) {
     showToast("Produto inválido");
     return;
@@ -344,7 +371,9 @@ function removeFromCart(productId) {
   animateCartCounters();
   showToast("Produto removido do carrinho");
 
-  if (!state.cart.length) closeCheckout();
+  if (!state.cart.length) {
+    closeCheckout();
+  }
 }
 
 function updateQuantity(productId, change) {
@@ -368,8 +397,11 @@ function clearCart() {
   persistCart();
   renderCart();
 
-  if (elements.checkoutForm) elements.checkoutForm.reset();
+  if (elements.checkoutForm) {
+    elements.checkoutForm.reset();
+  }
 
+  toggleAddressField();
   closeCheckout();
   closeCart();
   showToast("Carrinho limpo");
@@ -408,9 +440,12 @@ function openCheckout() {
   elements.checkoutModal.classList.add("is-open");
   elements.checkoutModal.setAttribute("aria-hidden", "false");
   setBodyScrollLocked(true);
+  toggleAddressField();
 
   const firstInput = elements.checkoutForm?.querySelector("input, textarea, select");
-  if (firstInput) setTimeout(() => firstInput.focus(), 50);
+  if (firstInput) {
+    setTimeout(() => firstInput.focus(), 50);
+  }
 }
 
 function closeCheckout() {
@@ -433,14 +468,27 @@ function openProductModal(productId) {
 
   state.selectedProductId = productId;
 
-  if (elements.productModalTitle) elements.productModalTitle.textContent = product.name;
+  if (elements.productModalTitle) {
+    elements.productModalTitle.textContent = product.name;
+  }
+
   if (elements.productModalImage) {
     elements.productModalImage.src = product.image;
     elements.productModalImage.alt = product.name;
   }
-  if (elements.productModalTag) elements.productModalTag.textContent = product.tag || "Item";
-  if (elements.productModalDescription) elements.productModalDescription.textContent = product.description;
-  if (elements.productModalPrice) elements.productModalPrice.textContent = formatCurrency(product.price);
+
+  if (elements.productModalTag) {
+    elements.productModalTag.textContent = product.tag || "Item";
+  }
+
+  if (elements.productModalDescription) {
+    elements.productModalDescription.textContent = product.description;
+  }
+
+  if (elements.productModalPrice) {
+    elements.productModalPrice.textContent = formatCurrency(product.price);
+  }
+
   if (elements.productModalPrep) {
     elements.productModalPrep.textContent =
       product.category === "combos" ? "25 a 40 min" : "15 a 25 min";
@@ -467,16 +515,20 @@ function closeProductModal() {
 }
 
 function toggleAddressField() {
-  if (!elements.orderType || !elements.addressField || !elements.checkoutForm) return;
+  if (!elements.orderType || !elements.addressField) return;
 
-  const addressInput = elements.checkoutForm.querySelector('textarea[name="address"]');
+  const addressInput = getAddressInput();
   const isDelivery = elements.orderType.value === "Entrega";
 
-  elements.addressField.style.display = isDelivery ? "" : "none";
+  elements.addressField.style.display = isDelivery ? "grid" : "none";
+  elements.addressField.setAttribute("aria-hidden", String(!isDelivery));
 
   if (addressInput) {
     addressInput.required = isDelivery;
-    if (!isDelivery) addressInput.value = "";
+
+    if (!isDelivery) {
+      addressInput.value = "";
+    }
   }
 }
 
@@ -490,15 +542,33 @@ function validateCheckout(formData) {
   const changeFor = normalizeText(formData.get("changeFor"));
   const notes = normalizeText(formData.get("notes"));
 
-  if (!customerName) return { valid: false, message: "Digite o nome do cliente" };
-  if (customerName.length < 2) return { valid: false, message: "Digite um nome válido" };
-  if (!phoneRaw) return { valid: false, message: "Digite o telefone ou WhatsApp" };
-  if (phoneDigits.length < 10) return { valid: false, message: "Digite um telefone válido com DDD" };
-  if (!orderType) return { valid: false, message: "Selecione o tipo do pedido" };
+  if (!customerName) {
+    return { valid: false, message: "Digite o nome do cliente" };
+  }
+
+  if (customerName.length < 2) {
+    return { valid: false, message: "Digite um nome válido" };
+  }
+
+  if (!phoneRaw) {
+    return { valid: false, message: "Digite o telefone ou WhatsApp" };
+  }
+
+  if (phoneDigits.length < 10) {
+    return { valid: false, message: "Digite um telefone válido com DDD" };
+  }
+
+  if (!orderType) {
+    return { valid: false, message: "Selecione o tipo do pedido" };
+  }
+
   if (orderType === "Entrega" && !address) {
     return { valid: false, message: "Digite o endereço completo para entrega" };
   }
-  if (!paymentMethod) return { valid: false, message: "Selecione a forma de pagamento" };
+
+  if (!paymentMethod) {
+    return { valid: false, message: "Selecione a forma de pagamento" };
+  }
 
   if (paymentMethod.toLowerCase() === "dinheiro" && changeFor && !/^\d+[.,]?\d*$/.test(changeFor)) {
     return { valid: false, message: "Preencha o troco em formato válido. Ex: 100,00" };
@@ -524,25 +594,27 @@ function buildWhatsAppMessage(validated) {
   const prepTime = getPrepTimeRange();
   const dateTime = new Date().toLocaleString("pt-BR");
 
-  const lines = items.map(
+  const itemLines = items.map(
     (item) => `• ${item.quantity}x ${item.name} — ${formatCurrency(item.total)}`,
   );
 
   return [
-    `🍔 *NOVO PEDIDO - MANU BURGUER*`,
-    ``,
+    "🍔 *NOVO PEDIDO - MANU BURGUER*",
+    "",
     `*Data/Hora:* ${dateTime}`,
     `*Cliente:* ${validated.customerName}`,
     `*Telefone:* ${validated.phone}`,
     `*Tipo do pedido:* ${validated.orderType}`,
-    validated.orderType === "Entrega" ? `*Endereço:* ${validated.address}` : `*Retirada:* No balcão`,
+    validated.orderType === "Entrega"
+      ? `*Endereço:* ${validated.address}`
+      : "*Retirada:* No balcão",
     `*Pagamento:* ${validated.paymentMethod}`,
     validated.changeFor ? `*Troco para:* ${validated.changeFor}` : null,
     `*Preparo médio:* ${prepTime}`,
-    ``,
-    `*Itens do pedido:*`,
-    ...lines,
-    ``,
+    "",
+    "*Itens do pedido:*",
+    ...itemLines,
+    "",
     `*Total:* ${formatCurrency(totals.total)}`,
     validated.notes ? `*Observações:* ${validated.notes}` : null,
   ]
@@ -666,18 +738,50 @@ function bindEvents() {
     });
   }
 
-  if (elements.openCartTop) elements.openCartTop.addEventListener("click", openCart);
-  if (elements.openCartHero) elements.openCartHero.addEventListener("click", openCart);
-  if (elements.openCartBottom) elements.openCartBottom.addEventListener("click", openCart);
-  if (elements.closeCart) elements.closeCart.addEventListener("click", closeCart);
-  if (elements.cartOverlay) elements.cartOverlay.addEventListener("click", closeCart);
-  if (elements.clearCart) elements.clearCart.addEventListener("click", clearCart);
-  if (elements.openCheckout) elements.openCheckout.addEventListener("click", openCheckout);
-  if (elements.closeCheckout) elements.closeCheckout.addEventListener("click", closeCheckout);
-  if (elements.checkoutOverlay) elements.checkoutOverlay.addEventListener("click", closeCheckout);
+  if (elements.openCartTop) {
+    elements.openCartTop.addEventListener("click", openCart);
+  }
 
-  if (elements.closeProductModal) elements.closeProductModal.addEventListener("click", closeProductModal);
-  if (elements.productOverlay) elements.productOverlay.addEventListener("click", closeProductModal);
+  if (elements.openCartHero) {
+    elements.openCartHero.addEventListener("click", openCart);
+  }
+
+  if (elements.openCartBottom) {
+    elements.openCartBottom.addEventListener("click", openCart);
+  }
+
+  if (elements.closeCart) {
+    elements.closeCart.addEventListener("click", closeCart);
+  }
+
+  if (elements.cartOverlay) {
+    elements.cartOverlay.addEventListener("click", closeCart);
+  }
+
+  if (elements.clearCart) {
+    elements.clearCart.addEventListener("click", clearCart);
+  }
+
+  if (elements.openCheckout) {
+    elements.openCheckout.addEventListener("click", openCheckout);
+  }
+
+  if (elements.closeCheckout) {
+    elements.closeCheckout.addEventListener("click", closeCheckout);
+  }
+
+  if (elements.checkoutOverlay) {
+    elements.checkoutOverlay.addEventListener("click", closeCheckout);
+  }
+
+  if (elements.closeProductModal) {
+    elements.closeProductModal.addEventListener("click", closeProductModal);
+  }
+
+  if (elements.productOverlay) {
+    elements.productOverlay.addEventListener("click", closeProductModal);
+  }
+
   if (elements.productModalAdd) {
     elements.productModalAdd.addEventListener("click", () => {
       if (!state.selectedProductId) return;
